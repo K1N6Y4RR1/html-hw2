@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guess the cookies</title>
+    <title>Deviner les nombres de biscuits</title>
     <style>
         #body {
             background-image:url(./grandmad1_background.webp);
@@ -57,10 +57,61 @@
             position:absolute;
             bottom:15px;
             width:700px;
+            height:50px;
             text-align:center;
             font-size: 30px;
             color: rgb(108, 64, 35);
             margin-top: 20px;
+        }
+        #start {
+            width:99.5%;
+            height:100%;
+            position:absolute;
+            background-color: black;
+            top:0px;
+            opacity: 85%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #button {
+            background-color: rgb(149, 90, 51);
+            font-family: 'comic sans ms';
+            border: 2px solid rgb(108, 64, 35);
+            padding:15px 16px 15px 16px;
+            text-align: center;
+            font-size: 16px;
+            margin: 10px 0 10px 0;
+            transition-duration: 0.4s;
+        }
+        #button:hover {
+            box-shadow: 5px 5px rgba(252, 167, 8, 0.6);
+            color:aliceblue;
+        }
+        input[id='nombre'] {
+            color:rgb(73, 43, 23);
+            font-family: 'comic sans ms';
+            padding:10px;
+            font-size: 20px;
+            border: 2px solid rgb(108, 64, 35);
+            border-radius: 5px;
+            text-align: center;
+            transition-duration:0.4s;
+            outline-width: 0;
+        }
+        input[id='nombre']:hover {
+            box-shadow: 5px 5px rgba(252, 167, 8, 0.6);
+        }
+        input[id='response'] {
+            margin:35px;
+            font-family: 'comic sans ms';
+            width:500px;
+            font-size: 20px;
+            padding: 0 5px;
+            border: none;
+            background-color:aliceblue;
+            border-radius: 5px;
+            text-align: center;
         }
     </style>
 </head>
@@ -76,12 +127,15 @@
         <h1> Devinez le nombre de biscuits que j'ai fait </h1> <br>
         <h3> (Entre 0-100) </h3> <br>
         <input type="text" id="nombre"> <br>
-        <input type="button" value="Verification" onclick="verif()"> <br>
-        <input type="text" id="reponse"> <br>
-        <div id="comment"> "Good Luck!" - Grandma </div>
+        <input type="button" value="Verification" id="button" onclick="verif()"> <br>
+        <input type="text" id="response"> <br>
+        <div id="comment"> "Bonne Chance!" - Grandma </div>
     </div>
 
     <div id="vie">
+    </div>
+    <div id='start' onclick="start()">
+        <h1 style="font-size: 100px;"> CLIQUEZ POUR COMMENCER </h1>
     </div>
 
 
@@ -89,17 +143,26 @@
         var aleatoire = Math.floor(Math.random() * 100);
         var life = 900;
         var background = document.getElementById('backgroundmusic');
-        background.load();
-        background.play();
         var cookie = document.getElementById('assend');
         var secret = document.getElementById('secret');
         console.log(aleatoire);
+        window.onload = function() {
+        };
+
+        function start() {
+            var start = document.getElementById('start');
+            background.loop = true;
+            background.play();
+            start.style.opacity = 0;
+            start.style.pointerEvents = 'none';
+        }
         function verif() {
             var nombre = parseInt(document.getElementById("nombre").value, 10);
             var vie = document.getElementById("vie");
-            var reponse = document.getElementById("reponse");
+            var reponse = document.getElementById("response");
+            console.log(nombre);
                 if (nombre === aleatoire) {
-                    reponse.value = "Vous avez gagne!";
+                    reponse.value = "Vous avez gagné!";
                 }
                 if (nombre > aleatoire) {
                     cookie.load();
@@ -120,7 +183,7 @@
                 if (life <= 0) {
                     secret.load();
                     secret.play();
-                    reponse.value = "rip! le nombre etait " + aleatoire;
+                    reponse.value = "Game Over! Le nombre était " + aleatoire;
 
                 }
                 if (life === 720) {
@@ -128,7 +191,7 @@
                     body.style.backgroundRepeat = 'repeat';
                     body.style.backgroundSize = '250px 250px';
                     body.style.backgroundImage = 'url(./cookie_backgroundd.jpg)';
-                    comment.innerHTML = "I still believe in you! - Grandma"
+                    comment.innerHTML = "Je crois en toi! - Grandma"
 
                 }
                 if (life === 540) {
@@ -136,19 +199,26 @@
                     body.style.backgroundRepeat = 'repeat';
                     body.style.backgroundSize = '250px 250px';
                     body.style.backgroundImage = 'url(./grandmad2_background.jpg)';
+                    comment.innerHTML = "Celui-ci sera la bonne! - Grandma"
                 }
                 if (life === 360) {
                     grandmas.src ='grandmad3.png'
                     body.style.backgroundRepeat = 'repeat';
                     body.style.backgroundSize = '250px 250px';
                     body.style.backgroundImage = 'url(./grandmad3_background.webp)';
+                    comment.innerHTML = "Il ne te reste pas beaucoup de chances..."
                 }
                 if (life === 180) {
                     grandmas.src ='grandmad4.png'
                     body.style.backgroundRepeat = 'repeat';
                     body.style.backgroundSize = '250px 250px';
                     body.style.backgroundImage = 'url(./grandmad4_background.png)';
+                    comment.innerHTML = ' ...'
                 }
+                if (life === 0) {
+                    comment.innerHTML = ' Je suis déçue par ta performance...'
+                }
+                
         }
     </script>
 </body>
