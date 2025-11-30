@@ -96,7 +96,7 @@
             border: 2px solid rgb(108, 64, 35);
             border-radius: 5px;
             text-align: center;
-            transition-duration:0.4s;
+            transition-duration:0.15s;
             outline-width: 0;
         }
         input[id='nombre']:hover {
@@ -104,6 +104,7 @@
         }
         input[id='response'] {
             margin:35px;
+            pointer-events: none;
             font-family: 'comic sans ms';
             width:500px;
             font-size: 20px;
@@ -112,6 +113,26 @@
             background-color:aliceblue;
             border-radius: 5px;
             text-align: center;
+            color:rgb(73, 43, 23);
+        }
+        #again {
+            opacity: 0;
+            pointer-events: none;
+            border: 2px solid rgb(73, 43, 23);
+            width:200px;
+            margin:auto;
+            margin-top:50px;
+            height:100px;
+            background-color: rgb(149, 90, 51);
+            font-family: 'comic sans ms';
+            padding:15px 16px;
+            text-align: center;
+            font-size: 30px;
+            transition-duration: 0.15s;
+        }
+        #again:hover {
+            box-shadow: 5px 5px rgba(252, 167, 8, 0.6);
+            color:aliceblue;
         }
     </style>
 </head>
@@ -133,6 +154,10 @@
     </div>
 
     <div id="vie">
+    </div>
+    <div>
+        <input type="button" value="Réessayer?" id="again" onclick="retry()">
+        </input>
     </div>
     <div id='start' onclick="start()">
         <h1 style="font-size: 100px;"> CLIQUEZ POUR COMMENCER </h1>
@@ -217,8 +242,12 @@
                 }
                 if (life === 0) {
                     comment.innerHTML = ' Je suis déçue par ta performance...'
+                    again.style.opacity = 1;
+                    again.style.pointerEvents = 'auto';
                 }
-                
+        }
+        function retry() {
+            location.reload();
         }
     </script>
 </body>
