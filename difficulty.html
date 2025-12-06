@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Difficulté</title>
+    <style>
+        body {
+            background-color:black;
+        }
+        #container {
+            display:flex;
+            flex-direction: column;
+            color:aliceblue;
+            margin:auto;
+            text-align:center;
+            position:relative;
+            height:98vh;
+            width:98vw;
+        }
+        .level {
+            margin-top:10px;
+            width:300px;
+            height:75px;
+            margin: 50px auto ;
+            margin-top:50px;
+            padding:auto;
+            border:2px solid white;
+            background-color:black;
+            font-family:"comic sans ms";
+            color:aliceblue;
+            font-size:50px;
+            border-radius: 50px;
+            transition-duration: 0.4s;
+            text-decoration:none;
+        }
+        .level:hover {
+            box-shadow: 7px 7px rgba(255, 255, 255, 0.5);
+        }
+        h1 {
+            font-family:"comic sans ms";
+            font-size:50px;
+            margin:0;
+            margin-top:150px;
+            padding:0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1> Choisissez la difficulté : </h1>
+        <a class="level" href="game-normal.html" onclick="difficultyeasy()" > facile </a>
+        <a class="level" href="game-normal.html" onclick="difficultymedium()"> moyen </a>
+        <a class="level" href="game-normal.html" onclick="difficultyhard()"> difficile </a>
+    </div>
+    <script>
+        function difficultyeasy() {
+            var easy = 10;
+            localStorage.setItem("difficulty",easy);
+        }
+        function difficultymedium() {
+            var medium = 100;
+            localStorage.setItem("difficulty",medium);
+        }
+        function difficultyhard() {
+            var hard = 10000;
+            localStorage.setItem("difficulty",hard);
+        }
+    </script>
+</body>
+</html>

@@ -24,11 +24,12 @@
             padding-left:15px;
             padding-right:15px;
         }
-        h3 {
+        #numbers {
             color:rgb(196, 118, 1);
             font-family:"comic sans ms";
             padding-left:15px;
             padding-right:15px;
+            font-size:22px;
             margin:0px;
             padding:0px;
         }
@@ -64,11 +65,12 @@
             margin-top: 20px;
         }
         #start {
-            width:99.5%;
+            width:100%;
             height:100%;
             position:absolute;
             background-color: black;
             top:0px;
+            left:0px;
             opacity: 85%;
             display: flex;
             justify-content: center;
@@ -121,32 +123,35 @@
             border: 2px solid rgb(73, 43, 23);
             width:200px;
             margin:auto;
-            margin-top:50px;
             height:100px;
             background-color: rgb(149, 90, 51);
             font-family: 'comic sans ms';
             padding:15px 16px;
             text-align: center;
             font-size: 30px;
-            transition-duration: 0.15s;
+            color:black;
+            transition-duration: 0.4s;
+            text-decoration:none;
         }
         #again:hover {
-            box-shadow: 5px 5px rgba(252, 167, 8, 0.6);
+            box-shadow: 7px 7px rgba(252, 167, 8);
             color:aliceblue;
         }
     </style>
 </head>
 <body id="body">
+    <image id="winner" src="" style="position:absolute; top:0px; left:0px; width:100%; height:100%; pointer-events: none;"></image>
+    <audio src="yayying.mp3" id="yay"> </audio>
     <audio src='backgroundmusic.mp3' id='backgroundmusic'> </audio>
     <audio src="assend.mp3" id="assend"> </audio>
     <audio src="secret.mp3" id="secret"> </audio>
-        <div style='height:250px; width:250px; margin-left:10vw; float: left; border:5px solid black; display:flex; flex-direction:row;'>
-            <image id="grandmas" src="grandma.png" style="height:250px; width:250px;"> </image>
+    <div style='height:250px; width:250px; margin-left:10vw; float: left; border:5px solid black; display:flex; flex-direction:row;'>
+        <image id="grandmas" src="grandma.png" style="height:250px; width:250px;"> </image>
         <div id="speech"> </div>
     </div>
     <div style = "position:relative; margin:auto; margin-top:150px; margin-left:35vw; background-color: aliceblue; width:700px; height:400px; text-align:center; border-radius: 45px;">
         <h1> Devinez le nombre de biscuits que j'ai fait </h1> <br>
-        <h3> (Entre 0-100) </h3> <br>
+        <div id="numbers"> </div> <br>
         <input type="text" id="nombre"> <br>
         <input type="button" value="Verification" id="button" onclick="verif()"> <br>
         <input type="text" id="response"> <br>
@@ -155,31 +160,29 @@
 
     <div id="vie">
     </div>
-    <div>
-        <input type="button" value="Réessayer?" id="again" onclick="retry()">
-        </input>
-    </div>
     <div id='start' onclick="start()">
         <h1 style="font-size: 100px;"> CLIQUEZ POUR COMMENCER </h1>
     </div>
-
+    <div style="margin:auto; margin-top:15vh;">
+        <a id="again" href="difficulty.html"> Réssayer? </a>
+    </div>
 
     <script>
-        var aleatoire = Math.floor(Math.random() * 100);
+        var stored = localStorage.getItem("difficulty");
+        var aleatoire = Math.floor(Math.random() * stored);
         var life = 900;
         var background = document.getElementById('backgroundmusic');
+        var yay = document.getElementById('yay');
         var cookie = document.getElementById('assend');
         var secret = document.getElementById('secret');
         console.log(aleatoire);
-        window.onload = function() {
-        };
-
         function start() {
             var start = document.getElementById('start');
             background.loop = true;
             background.play();
             start.style.opacity = 0;
             start.style.pointerEvents = 'none';
+            numbers.innerHTML = "(Entre 0-"+stored+")";
         }
         function verif() {
             var nombre = parseInt(document.getElementById("nombre").value, 10);
@@ -188,6 +191,9 @@
             console.log(nombre);
                 if (nombre === aleatoire) {
                     reponse.value = "Vous avez gagné!";
+                    winner.src = "confetti-holiday-cheer.gif";
+                    yay.load();
+                    yay.play();
                 }
                 if (nombre > aleatoire) {
                     cookie.load();
@@ -200,7 +206,7 @@
                 if (nombre < aleatoire) {
                     cookie.load();
                     cookie.play();
-                    reponse.value = "Le nombre est plus grand!";
+                    reponse.value = "Le nombre est plus grand";
                     life -= 180;
                     vie.style.left = "calc(50% - " + (life / 2) + "px)";
                     vie.style.width =life+"px";
@@ -245,9 +251,6 @@
                     again.style.opacity = 1;
                     again.style.pointerEvents = 'auto';
                 }
-        }
-        function retry() {
-            location.reload();
         }
     </script>
 </body>
