@@ -12,6 +12,7 @@
             background-repeat:repeat;
             text-align:center;
         }
+        /* L'image dans le background se répète sans arrêt.*/
         h1 {
             color:rgb(174, 88, 31);
             font-family:"comic sans ms";
@@ -33,6 +34,7 @@
             margin:0px;
             padding:0px;
         }
+        /* Le nombre de chiffres possibles. Ce nombre change dépendamment de la difficulté choisi dans la page précédente. */
         #vie {
             margin:auto;
             position:fixed;
@@ -43,6 +45,7 @@
             background-image:url(./big\ cookie.png);
             background-size : 180px 180px;
         }
+        /* Les vies. Ils sont représentés par des biscuits. */
         #speech {
             height: 0;
             width: 0;
@@ -53,6 +56,8 @@
             border-bottom: 5vw solid transparent;
             margin-left: 3vw;
         }
+        /* Le triangle pour le speech bubble qui relie le jeu à la grand-mère.
+        Aide : https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_shapes_triangle-left */
         #comment {
             font-family: "comic sans ms";
             position:absolute;
@@ -64,6 +69,7 @@
             color: rgb(108, 64, 35);
             margin-top: 20px;
         }
+        /* Extra. Petit message que la grand-mère nous donne dépendamment du nombre de vie. */
         #start {
             width:100%;
             height:100%;
@@ -73,9 +79,9 @@
             left:0px;
             opacity: 85%;
             display: flex;
-            justify-content: center;
             align-items: center;
         }
+        /* Lorsqu'on commence le jeu, l'écran est noir et nous demande de cliquer afin de commencer le jeu. Je l'ai ajouté afin de pouvoir commencer la musique (qui était supposé de jouer lorsqu'on ouvre la page) peu importe le browser. */
         #button {
             background-color: rgb(149, 90, 51);
             font-family: 'comic sans ms';
@@ -90,6 +96,7 @@
             box-shadow: 5px 5px rgba(252, 167, 8, 0.6);
             color:aliceblue;
         }
+        /* Le bouton où le joueur vérifie si sa réponse est la bonne. Il a un effet lorsque la souris est sur celui-ci. (shadow et la couleur du texte) */
         input[id='nombre'] {
             color:rgb(73, 43, 23);
             font-family: 'comic sans ms';
@@ -99,11 +106,11 @@
             border-radius: 5px;
             text-align: center;
             transition-duration:0.15s;
-            outline-width: 0;
         }
         input[id='nombre']:hover {
             box-shadow: 5px 5px rgba(252, 167, 8, 0.6);
         }
+        /* L'input où le joueur met sa réponse. Il a un effet lorsque la souris est sur celui-ci. (shadow) */
         input[id='response'] {
             margin:35px;
             pointer-events: none;
@@ -113,10 +120,13 @@
             padding: 0 5px;
             border: none;
             background-color:aliceblue;
-            border-radius: 5px;
             text-align: center;
             color:rgb(73, 43, 23);
         }
+        /* Le input où le jeu dit au joueur si le nombre donné est plus grand, plus petit ou exactement la même que la réponse. */
+        /* Il ne peut pas être intéragit par le joueur.*/
+
+        /* Aide pour les inputs : https://www.w3schools.com/css/css_form.asp */
         #again {
             opacity: 0;
             pointer-events: none;
@@ -137,18 +147,22 @@
             box-shadow: 7px 7px rgba(252, 167, 8);
             color:aliceblue;
         }
+        /* Le bouton pour recommencer le jeu (amener à la page pour choisir la diffculté). Il a un effet lorsque la souris est sur le bouton. (shadow et couleur du texte) */
     </style>
 </head>
 <body id="body">
     <image id="winner" src="" style="position:absolute; top:0px; left:0px; width:100%; height:100%; pointer-events: none;"></image>
+    <!--Image (gif) qui joue lorsque le joueur gagne-->
     <audio src="yayying.mp3" id="yay"> </audio>
     <audio src='backgroundmusic.mp3' id='backgroundmusic'> </audio>
     <audio src="assend.mp3" id="assend"> </audio>
     <audio src="secret.mp3" id="secret"> </audio>
+    <!-- Les sfx et chansons utilisés dans cette page. -->
     <div style='height:250px; width:250px; margin-left:10vw; float: left; border:5px solid black; display:flex; flex-direction:row;'>
         <image id="grandmas" src="grandma.png" style="height:250px; width:250px;"> </image>
         <div id="speech"> </div>
     </div>
+    <!-- L'image de la grand-mère et le triangle pour le speech bubble.-->
     <div style = "position:relative; margin:auto; margin-top:150px; margin-left:35vw; background-color: aliceblue; width:700px; height:400px; text-align:center; border-radius: 45px;">
         <h1> Devinez le nombre de biscuits que j'ai fait </h1> <br>
         <div id="numbers"> </div> <br>
@@ -157,24 +171,32 @@
         <input type="text" id="response"> <br>
         <div id="comment"> "Bonne Chance!" - Grandma </div>
     </div>
+    <!-- La boîte qui contient tout les éléments du jeu + le message de la grand-mère.-->
 
-    <div id="vie">
-    </div>
+    <div id="vie"> </div>
+    <!-- Les vies. -->
+
     <div id='start' onclick="start()">
-        <h1 style="font-size: 100px;"> CLIQUEZ POUR COMMENCER </h1>
+        <h1 style="font-size: 100px; margin:auto;"> CLIQUEZ POUR COMMENCER </h1>
     </div>
+    <!-- L'écran noir opaque lorsque tu ouvres la page et le text qui dit comment commencer le jeu. -->
+
     <div style="margin:auto; margin-top:15vh;">
         <a id="again" href="difficulty.html"> Réssayer? </a>
     </div>
-
+    <!-- Le bouton pour recommencer le jeu. Il nous retourne aux options de diffculté.-->
     <script>
         var stored = localStorage.getItem("difficulty");
+        // La variable qui détermine la quantité de réponses possibles. Le joueur le choisi dans la page difficulty.html.
         var aleatoire = Math.floor(Math.random() * stored);
+        // La réponse aléatoire de 0 à "stored" (10 - 100 - 10000). 
         var life = 900;
         var background = document.getElementById('backgroundmusic');
         var yay = document.getElementById('yay');
         var cookie = document.getElementById('assend');
         var secret = document.getElementById('secret');
+        // Les audios utilisés.
+        
         console.log(aleatoire);
         function start() {
             var start = document.getElementById('start');
@@ -184,6 +206,10 @@
             start.style.pointerEvents = 'none';
             numbers.innerHTML = "(Entre 0-"+stored+")";
         }
+        // Lorsqu'on appuie l'écran noir opaque, il disparait et ne peut plus être intéragit par le joueur. La musique commence et le jeu écrit le nombre de chiffres possibles (variable numbers).
+        // Aide : https://stackoverflow.com/questions/18083061/make-element-unclickable-click-things-behind-it
+        // https://stackoverflow.com/questions/13610638/loop-audio-with-javascript
+
         function verif() {
             var nombre = parseInt(document.getElementById("nombre").value, 10);
             var vie = document.getElementById("vie");
@@ -217,13 +243,16 @@
                     reponse.value = "Game Over! Le nombre était " + aleatoire;
 
                 }
+                
+                // Le code pour vérifier si le joueur a gagné.
+
                 if (life === 720) {
                     grandmas.src ='grandmad.png'
-                    body.style.backgroundRepeat = 'repeat';
-                    body.style.backgroundSize = '250px 250px';
+                    body.style.backgroundRepeat = 'no-repeat';
+                    body.style.backgroundSize = '100% 100%';
                     body.style.backgroundImage = 'url(./cookie_backgroundd.jpg)';
                     comment.innerHTML = "Je crois en toi! - Grandma"
-
+                    // Pour ce background, il ne se repète pas et couvre entièrement l'écran.
                 }
                 if (life === 540) {
                     grandmas.src ='grandmad2.png'
@@ -234,15 +263,11 @@
                 }
                 if (life === 360) {
                     grandmas.src ='grandmad3.png'
-                    body.style.backgroundRepeat = 'repeat';
-                    body.style.backgroundSize = '250px 250px';
                     body.style.backgroundImage = 'url(./grandmad3_background.webp)';
                     comment.innerHTML = "Il ne te reste pas beaucoup de chances..."
                 }
                 if (life === 180) {
                     grandmas.src ='grandmad4.png'
-                    body.style.backgroundRepeat = 'repeat';
-                    body.style.backgroundSize = '250px 250px';
                     body.style.backgroundImage = 'url(./grandmad4_background.png)';
                     comment.innerHTML = ' ...'
                 }
@@ -251,6 +276,7 @@
                     again.style.opacity = 1;
                     again.style.pointerEvents = 'auto';
                 }
+                // Nouveaux portrait de la grand-mère et du background pour chaque vie que tu perds. Il y a aussi un nouveau message selon le nombre de vie.
         }
     </script>
 </body>

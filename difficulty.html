@@ -18,6 +18,9 @@
             height:98vh;
             width:98vw;
         }
+        /* C'est la boite qui contient tous les éléments de la page. Il les organise en colonne. Ainsi, je n'ai pas le besoin de positioner chaque option. Recommendation par Guanwei 
+        Aide : https://www.w3schools.com/css/css3_flexbox_container.asp */
+
         .level {
             margin-top:10px;
             width:300px;
@@ -37,6 +40,9 @@
         .level:hover {
             box-shadow: 7px 7px rgba(255, 255, 255, 0.5);
         }
+        /* Les options de difficulté. Lorsque la souris est sur l'option, il crée un effet dynamique. 
+        Aide : https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_shadow */
+
         h1 {
             font-family:"comic sans ms";
             font-size:50px;
@@ -53,6 +59,9 @@
         <a class="level" href="game-normal.html" onclick="difficultymedium()"> moyen </a>
         <a class="level" href="game-normal.html" onclick="difficultyhard()"> difficile </a>
     </div>
+    <!-- Lorsqu'on appuie sur les options, ils nous amènent au jeu.
+    Aide : https://stackoverflow.com/questions/2906582/how-do-i-create-an-html-button-that-acts-like-a-link -->
+
     <script>
         function difficultyeasy() {
             var easy = 10;
@@ -66,6 +75,7 @@
             var hard = 10000;
             localStorage.setItem("difficulty",hard);
         }
+        // Pour la difficulté, on crée une variable qu'on va utiliser dans l'autre page pour la difficulté (nombre de chiffres possibles).
     </script>
 </body>
 </html>
